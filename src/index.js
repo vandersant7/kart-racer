@@ -51,7 +51,22 @@ async function logRollResult(
   )
 }
 
+async function getSurpriseItem() {
+  let randomItem = Math.random()
+  let result
 
+  switch (true) {
+    case randomItem < 0.25:
+      result = 'casco'
+      break
+    case randomItem < 0.5:
+      result = 'bomba'
+      break
+    default:
+      result = 'Nenhum item surpresa'
+  }
+  return result
+}
 
 async function playRaceEngine(character1, character2) {
   for (let round = 1; round <= 5; round++) {
@@ -150,7 +165,24 @@ async function playRaceEngine(character1, character2) {
       powerResult1 += itemEffect1
       powerResult2 += itemEffect2
 
-     
+      //verificando o vencedor do confronto
+      if (powerResult1 > powerResult2 && character2.PONTOS > 0 ? 1 : 0) {
+        console.log(
+          `${character1.NOME} venceu o confronto! ${character2.NOME} perdeu 1 ponto 🐢`
+        )
+        character2.PONTOS--, character1.PONTOS++
+      }
+
+      if (powerResult2 > powerResult1 && character1.PONTOS > 0 ? 1 : 0) {
+        console.log(
+          `${character2.NOME} venceu o confronto! ${character1.NOME} perdeu 1 ponto 🐢`
+        )
+        character1.PONTOS--, character2.PONTOS++
+      }
+
+      if (powerResult1 === powerResult2) {
+        console.log('Confronto empatado. Nenhum ponto foi perdido.')
+      }
 
     //   if (powerResult1 > powerResult2) {
     //     console.log(
